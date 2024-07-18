@@ -27,14 +27,13 @@
                         <div class="col-sm">
                             <div class="d-flex justify-content-between">
                                 <h5 class="card-title mb-0">Danh sách danh mục</h5>
-                                <a href="{{ route('admin.user.create') }}" class="btn btn-primary add-btn"><i
+                                <a href="{{ route('admin.role.create') }}" class="btn btn-primary add-btn"><i
                                         class="ri-add-line align-bottom me-1"></i> Thêm mới</a>
                             </div>
                             <div class="">
-                                <span>Tất cả ({{ $all }}) |</span>
-                                <span>Đang hoạt động ({{ $all }}) |</span>
-                                <span><a href="{{ route('admin.user.trash') }}">Thùng rác
-                                        ({{ $trash }})</a></span>
+                                <span>Tất cả () |</span>
+                                <span>Đang hoạt động () |</span>
+                                <span><a href="">Thùng rác ()</a></span>
                             </div>
                         </div>
 
@@ -58,10 +57,8 @@
 
                                         <th class="sort" data-sort="id">STT</th>
 
-                                        <th class="sort" data-sort="name">Họ và tên</th>
-                                        <th class="sort " data-sort="thumbnail ">Ảnh</th>
-                                        <th class="sort" data-sort="email">Email</th>
-                                        <th class="sort" data-sort="role">Quyền</th>
+                                        <th class="sort" data-sort="name">Vai trò</th>
+                                        <th class="sort" data-sort="description">Mô tả</th>
                                         <th class="sort " data-sort="action">Hành động</th>
                                     </tr>
                                 </thead>
@@ -69,7 +66,7 @@
                                     @php
                                         $i = 0;
                                     @endphp
-                                    @foreach ($data as $value)
+                                    @foreach ($roles as $value)
                                         @php
                                             $i++;
                                         @endphp
@@ -81,34 +78,16 @@
                                                 </div>
                                             </th>
                                             <td>{{ $i }}</td>
-                                            <td class="name">{{ $value->first_name }} {{ $value->last_name }}</td>
-                                            <td class="thumbnail text-center">
-                                                @if ($value->thumbnail)
-                                                    @php
-                                                        $url = \Illuminate\Support\Facades\Storage::url(
-                                                            $value->thumbnail,
-                                                        );
-                                                    @endphp
-                                                    <img class="rounded-circle header-profile-user"
-                                                        src="{{ $url }}" alt="Header Avatar" />
-                                                @else
-                                                    <img class="rounded-circle header-profile-user"
-                                                        src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
-                                                        alt="Header Avatar" />
-                                                @endif
-                                            </td>
-                                            <td class="email">{{ $value->email }}</td>
+                                            <td class="name">{{ $value->name }}</td>
 
-                                            <td class="role ">
-                                                @foreach ($value->roles as $key)
-                                                    <span class="badge bg-primary">{{ $key->display_name }}</span>
-                                                @endforeach
-                                            </td>
+                                            <td class="email">{{ $value->description }}</td>
+
+
                                             <td class="text-center">
-                                                <a href="{{ route('admin.auth.setting', $value->id) }}"
+                                                <a href="{{ route('admin.role.edit', $value->id) }}"
                                                     class="btn btn-sm btn-warning">Chỉnh
                                                     sửa</a>
-                                                <a href="{{ route('admin.user.delsoft', $value->id) }}"
+                                                <a href="{{ route('admin.role.destroy', $value->id) }}"
                                                     onclick="return confirm('Bạn có chắc chắn muôn xóa tài khoản này không?')"
                                                     class="btn btn-sm btn-danger">Xóa</a>
                                             </td>

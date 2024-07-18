@@ -7,7 +7,7 @@
                 <div class="text-end p-3">
                     <div class="p-0 ms-auto rounded-circle profile-photo-edit">
                         <input id="profile-foreground-img-file-input" type="file"
-                               class="profile-foreground-img-file-input">
+                            class="profile-foreground-img-file-input">
                         <label for="profile-foreground-img-file-input" class="profile-photo-edit btn btn-light">
                             <i class="ri-image-edit-line align-bottom me-1"></i> Change Cover
                         </label>
@@ -25,18 +25,24 @@
                     <div class="card-body p-4">
                         <div class="text-center">
                             <div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-                                @php
-                                    $url = $user->thumbnail;
-                                    if (!\Illuminate\Support\Str::contains($url, 'http')) {
-                                        $url = \Illuminate\Support\Facades\Storage::url($url);
-                                    }
-                                @endphp
-                                <img src="{{ $url }}"
-                                     class="rounded-circle avatar-xl img-thumbnail user-profile-image"
-                                     alt="user-profile-image">
+                                @if ($user->thumbnail)
+                                    @php
+                                        $url = $user->thumbnail;
+                                        if (!\Illuminate\Support\Str::contains($url, 'http')) {
+                                            $url = \Illuminate\Support\Facades\Storage::url($url);
+                                        }
+                                    @endphp
+                                    <img src="{{ $url }}"
+                                        class="rounded-circle avatar-xl img-thumbnail user-profile-image"
+                                        alt="user-profile-image">
+                                @else
+                                    <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
+                                        class="rounded-circle avatar-xl img-thumbnail user-profile-image"
+                                        alt="user-profile-image">
+                                @endif
                                 <div class="avatar-xs p-0 rounded-circle profile-photo-edit">
                                     <input id="profile-img-file-input" type="file" name="thumbnail"
-                                           class="profile-img-file-input">
+                                        class="profile-img-file-input">
                                     <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                         <span class="avatar-title rounded-circle bg-light text-body"><i
                                                 class="ri-camera-fill"></i>
@@ -44,7 +50,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <h5 class="fs-16 mb-1">{{$user->first_name}} {{$user->last_name}}</h5>
+                            <h5 class="fs-16 mb-1">{{ $user->first_name }} {{ $user->last_name }}</h5>
                             <p class="text-muted mb-0"></p>
                         </div>
                     </div>
@@ -63,7 +69,7 @@
                         </div>
                         <div class="progress animated-progress custom-progress progress-label">
                             <div class="progress-bar bg-danger" role="progressbar" style="width: 30%" aria-valuenow="30"
-                                 aria-valuemin="0" aria-valuemax="100">
+                                aria-valuemin="0" aria-valuemax="100">
                                 <div class="label">30%</div>
                             </div>
                         </div>
@@ -87,7 +93,7 @@
                                 </span>
                             </div>
                             <input type="text" class="form-control" name="" id="gitUsername" placeholder="github"
-                                   value="@daveadame">
+                                value="@daveadame">
                         </div>
 
                     </div>
@@ -115,8 +121,8 @@
                                             <div class="mb-3">
                                                 <label for="firstnameInput" class="form-label">Họ</label>
                                                 <input type="text" class="form-control" name="first_name"
-                                                       id="firstnameInput" placeholder="Enter your firstname"
-                                                       value="{{ $user->first_name }}">
+                                                    id="firstnameInput" placeholder="Enter your firstname"
+                                                    value="{{ $user->first_name }}">
                                             </div>
                                         </div>
                                         <!--end col-->
@@ -124,8 +130,8 @@
                                             <div class="mb-3">
                                                 <label for="lastnameInput" class="form-label">Tên</label>
                                                 <input name="last_name" type="text" class="form-control"
-                                                       id="lastnameInput" placeholder="Enter your lastname"
-                                                       value="{{ $user->last_name }}">
+                                                    id="lastnameInput" placeholder="Enter your lastname"
+                                                    value="{{ $user->last_name }}">
                                             </div>
                                         </div>
                                         <!--end col-->
@@ -133,8 +139,8 @@
                                             <div class="mb-3">
                                                 <label for="phonenumberInput" class="form-label">Số điện thoại</label>
                                                 <input name="phone" type="text" class="form-control"
-                                                       value="{{ $user->phone }}"
-                                                       id="phonenumberInput" placeholder="Enter your phone number">
+                                                    value="{{ $user->phone }}" id="phonenumberInput"
+                                                    placeholder="Enter your phone number">
                                             </div>
                                         </div>
 
@@ -143,22 +149,21 @@
                                             <div class="mb-3">
                                                 <label for="emailInput" class="form-label">Email</label>
                                                 <input name="email" type="email" class="form-control"
-                                                       id="emailInput" value="{{ $user->email }}"
-                                                       placeholder="Enter your email">
+                                                    id="emailInput" value="{{ $user->email }}"
+                                                    placeholder="Enter your email">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label" for="gen-info-email-input">Vai trò</label>
                                                 <select class="js-example-basic-multiple" name="role_id[]"
-                                                        multiple="multiple" required>
-                                                    @foreach($role as $value)
-                                                        <option
-                                                            {{--Kiểm tra xem id có nằm trong roleOfUser hay không,
+                                                    multiple="multiple" required>
+                                                    @foreach ($role as $value)
+                                                        <option {{-- Kiểm tra xem id có nằm trong roleOfUser hay không,
                                                              nếu có thì so sash với value->id,
-                                                             trùng nhau thì in ra selected không thì thôi--}}
-                                                            {{$roleOfUser->contains('id',$value->id)?'selected':''}}
-                                                            value="{{$value->id}}">{{$value->name}}</option>
+                                                             trùng nhau thì in ra selected không thì thôi --}}
+                                                            {{ $roleOfUser->contains('id', $value->id) ? 'selected' : '' }}
+                                                            value="{{ $value->id }}">{{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div class="invalid-feedback">Vui lòng chọn vai trò</div>
@@ -167,19 +172,17 @@
                                         <!--end col-->
                                         <div class="col-lg-12">
                                             <div class="mb-3 pb-2">
-                                                <label for="exampleFormControlTextarea"
-                                                       class="form-label">Tiểu sử</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea"
-                                                          placeholder="Enter your description" rows="3"
-                                                          name="description">{{$user->description}}</textarea>
+                                                <label for="exampleFormControlTextarea" class="form-label">Tiểu sử</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea" placeholder="Enter your description" rows="3"
+                                                    name="description">{{ $user->description }}</textarea>
                                             </div>
                                         </div>
                                         <!--end col-->
                                         <div class="col-lg-12">
                                             <div class="hstack gap-2 justify-content-end">
                                                 <button type="submit" class="btn btn-primary">Cập nhật</button>
-                                                <a href="{{route('admin.auth.profile',$user->id)}}"
-                                                   class="btn btn-soft-success">Quay lại</a>
+                                                <a href="{{ route('admin.auth.profile', $user->id) }}"
+                                                    class="btn btn-soft-success">Quay lại</a>
                                             </div>
                                         </div>
                                         <!--end col-->
@@ -200,16 +203,16 @@
     </form>
 @endsection
 @section('style-libs')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 @section('script-libs')
     <script src="{{ asset('assets/js/pages/form-wizard.init.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script src="{{asset('assets/js/pages/select2.init.js')}}"></script>
+    <script src="{{ asset('assets/js/pages/select2.init.js') }}"></script>
     <script>
         $(".js-example-basic-multiple").select2({
             placeholder: "Select a state",

@@ -18,6 +18,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    const TYPE_ADMIN = 'admin';
+    const TYPE_USER = 'user';
     protected $fillable = [
 
         'first_name',
@@ -26,7 +28,7 @@ class User extends Authenticatable
         'thumbnail',
         'username',
         'password',
-        'role',
+        'type',
         'phone',
         'description',
         'deleted'
@@ -61,5 +63,14 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_role');
+    }
+    public function hasPermission($permission)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->permissions->where('slug', $permission)->count() > 0) {
+                return true;
+            }
+            return false;
+        }
     }
 }

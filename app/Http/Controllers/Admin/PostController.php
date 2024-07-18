@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -110,23 +111,27 @@ class PostController extends Controller
         }
     }
 
-    public function show()
+    public function show($id)
     {
-        return view(self::PATH_VIEW . __FUNCTION__);
+        $data = Post::query()->with('tags')->findOrFail($id);
+        $date = Post::query()->find($id);
+
+        // dd($tagsOfPost);
+        $formatDate =  Carbon::parse($date->created_at)->format('d/m/Y');
+        return view(self::PATH_VIEW . __FUNCTION__, compact('data', 'formatDate'));
     }
 
     public function edit(string $id)
     {
         $data = Post::query()->findOrFail($id);
-
+        $tagsOfPost = $data->tags->pluck('name')->implode(',');
         $listCat = $this->getCatalogues();
-
-        // dd($data);
-        return view('admin.posts.edit', compact('listCat', 'data'));
+        return view('admin.posts.edit', compact('listCat', 'data', 'tagsOfPost'));
     }
 
     public function update(Request $request, $id)
     {
+
         // Xác thực dữ liệu đầu vào
         $request->validate(
             [
@@ -149,6 +154,9 @@ class PostController extends Controller
 
         // Lấy bản ghi hiện tại từ cơ sở dữ liệu
         $post = Post::findOrFail($id);
+        // if (!Gate::allows('update-post', $post)) {
+        //     abort(403);
+        // }
         $currentImage = $post->thumbnail; // Lưu lại đường dẫn ảnh hiện tại
 
         // Lấy dữ liệu từ request ngoại trừ thumbnail

@@ -87,17 +87,17 @@ class HomeController extends Controller
     public function comment(Request $request, $id)
     {
         // dd($request->all());
-        $request->validate([
-            [
-                'content' => 'required',
-            ],
-            [
-                'required' => ':attribute không được để trống',
-            ],
-            [
-                'content' => 'Nội dung',
-            ]
-        ]);
+        // $request->validate([
+        //     [
+        //         'content' => 'required',
+        //     ],
+        //     [
+        //         'required' => ':attribute không được để trống',
+        //     ],
+        //     [
+        //         'content' => 'Nội dung',
+        //     ]
+        // ]);
 
         Comment::query()->create([
             'post_id' => $id,
@@ -107,8 +107,5 @@ class HomeController extends Controller
 
         return back();
     }
-    // public function showComment($id)
-    // {
-    //     $comment=
-    // }
+   
 }

@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->foreignIdFor(Catalogue::class)->constrained()->onDelete('cascade');
             $table->string('title');
             $table->string('slug');
-            $table->foreignIdFor(User::class)->constrained();
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->string('thumbnail')->nullable();
             $table->longText('excerpt')->nullable();
             $table->longText('content');

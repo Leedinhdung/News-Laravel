@@ -83,6 +83,7 @@
                                     </td>
 
                                     <td>
+
                                         @php
                                             $url = Storage::url($item->thumbnail);
                                         @endphp
@@ -91,7 +92,36 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @php
+                                        @if ($item->user->thumbnail)
+                                            @php
+                                                $url = \Illuminate\Support\Facades\Storage::url($item->user->thumbnail);
+                                            @endphp
+                                            <a href="{{ route('admin.auth.profile', $item->user->id) }}">
+                                                <div class="d-flex gap-2 align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <img src="{{ $url }}" alt=""
+                                                            class="avatar-xs rounded-circle" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        {{ $item->user->first_name }} {{ $item->user->last_name }}
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        @else
+                                            <a href="{{ route('admin.auth.profile', $item->user->id) }}">
+                                                <div class="d-flex gap-2 align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <img class="rounded-circle header-profile-user"
+                                                            src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
+                                                            alt="Header Avatar" />
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        {{ $item->user->first_name }} {{ $item->user->last_name }}
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        @endif
+                                        {{-- @php
                                             $url = Storage::url($item->user->thumbnail);
                                         @endphp
                                         <a href="{{ route('admin.auth.profile', $item->user->id) }}">
@@ -104,7 +134,7 @@
                                                     {{ $item->user->first_name }} {{ $item->user->last_name }}
                                                 </div>
                                             </div>
-                                        </a>
+                                        </a> --}}
 
                                     </td>
 
@@ -133,10 +163,16 @@
                                             </button>
                                             <ul class="dropdown-menu dropdown-menu-end">
 
+                                                <li><a href="{{ route('admin.post.show', $item->id) }}"
+                                                        class="dropdown-item edit-item-btn"><i
+                                                            class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                                        Chỉnh sửa</a>
+                                                </li>
                                                 <li><a href="{{ route('admin.post.edit', $item->id) }}"
                                                         class="dropdown-item edit-item-btn"><i
                                                             class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                        Chỉnh sửa</a></li>
+                                                        Chỉnh sửa</a>
+                                                </li>
                                                 <li>
                                                     <a href="{{ route('admin.post.delsoft', $item->id) }}"
                                                         onclick="return confirm('Bạn có chắc chắn xóa bài viết {{ $item->title }} không?')"

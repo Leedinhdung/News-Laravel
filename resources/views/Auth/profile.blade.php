@@ -2,27 +2,37 @@
 @section('content')
     <div class="profile-foreground position-relative mx-n4 mt-n4">
         <div class="profile-wid-bg">
-            <img src="{{ asset('assets/images/profile-bg.jpg') }}" alt="" class="profile-wid-img"/>
+            <img src="{{ asset('assets/images/profile-bg.jpg') }}" alt="" class="profile-wid-img" />
         </div>
     </div>
     <div class="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
         <div class="row g-4">
             <div class="col-auto">
                 <div class="avatar-lg">
-                    @php
-                        $url = $profile->thumbnail;
-                        if (!\Illuminate\Support\Str::contains($url, 'http')) {
-                            $url = \Illuminate\Support\Facades\Storage::url($url);
-                        }
-                    @endphp
-                    <img src="{{ $url }}" alt="user-img" class="img-thumbnail rounded-circle"/>
+                    @if ($profile->thumbnail)
+                        @php
+                            $url = $profile->thumbnail;
+                            if (!\Illuminate\Support\Str::contains($url, 'http')) {
+                                $url = \Illuminate\Support\Facades\Storage::url($url);
+                            }
+                        @endphp
+                        <img src="{{ $url }}" alt="user-img" class="img-thumbnail rounded-circle" />
+                    @else
+                        <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
+                            alt="user-img" class="img-thumbnail rounded-circle" />
+                    @endif
                 </div>
             </div>
             <!--end col-->
             <div class="col">
                 <div class="p-2">
                     <h3 class="text-white mb-1">{{ $profile->first_name }} {{ $profile->last_name }}</h3>
-                    <p class="text-white text-opacity-75"></p>
+
+                   
+                    {{-- @foreach ($profile->roles as $item)
+                        {{ $profile->roles->contains('name', $item->name) ? $profile->roles->name : '' }}
+                    @endforeach --}}
+
                     <div class="hstack text-white-50 gap-1">
                         {{-- <div class="me-2"><i
                                 class="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle"></i>Hà
@@ -64,31 +74,31 @@
                         <li class="nav-item">
                             <a class="nav-link fs-14 active" data-bs-toggle="tab" href="#overview-tab" role="tab">
                                 <i class="ri-airplay-fill d-inline-block d-md-none"></i> <span
-                                        class="d-none d-md-inline-block">Tổng quan</span>
+                                    class="d-none d-md-inline-block">Tổng quan</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-14" data-bs-toggle="tab" href="#activities" role="tab">
                                 <i class="ri-list-unordered d-inline-block d-md-none"></i> <span
-                                        class="d-none d-md-inline-block">Hoạt động</span>
+                                    class="d-none d-md-inline-block">Hoạt động</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-14" data-bs-toggle="tab" href="#projects" role="tab">
                                 <i class="ri-price-tag-line d-inline-block d-md-none"></i> <span
-                                        class="d-none d-md-inline-block">Dự án</span>
+                                    class="d-none d-md-inline-block">Dự án</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link fs-14" data-bs-toggle="tab" href="#documents" role="tab">
                                 <i class="ri-folder-4-line d-inline-block d-md-none"></i> <span
-                                        class="d-none d-md-inline-block">Tài liệu</span>
+                                    class="d-none d-md-inline-block">Tài liệu</span>
                             </a>
                         </li>
                     </ul>
                     <div class="flex-shrink-0">
                         <a href="{{ route('admin.auth.setting', $profile->id) }}" class="btn btn-success"><i
-                                    class="ri-edit-box-line align-bottom"></i> Chỉnh sửa</a>
+                                class="ri-edit-box-line align-bottom"></i> Chỉnh sửa</a>
                     </div>
                 </div>
                 <!-- Tab panes -->
@@ -101,7 +111,7 @@
                                         <h5 class="card-title mb-5">Hoàn thành thông tin cá nhân</h5>
                                         <div class="progress animated-progress custom-progress progress-label">
                                             <div class="progress-bar bg-danger" role="progressbar" style="width: 50%"
-                                                 aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
                                                 <div class="label">50%</div>
                                             </div>
                                         </div>
@@ -114,19 +124,19 @@
                                         <div class="table-responsive">
                                             <table class="table table-borderless mb-0">
                                                 <tbody>
-                                                <tr>
-                                                    <th class="ps-0 w-50">Họ tên:</th>
-                                                    <td class="text-muted">{{ $profile->first_name }}
-                                                        {{ $profile->last_name }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="ps-0">SĐT:</th>
-                                                    <td class="text-muted">{{$profile->phone}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="ps-0" scope="row">Email:</th>
-                                                    <td class="text-muted">{{ $profile->email }}</td>
-                                                </tr>
+                                                    <tr>
+                                                        <th class="ps-0 w-50">Họ tên:</th>
+                                                        <td class="text-muted">{{ $profile->first_name }}
+                                                            {{ $profile->last_name }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="ps-0">SĐT:</th>
+                                                        <td class="text-muted">{{ $profile->phone }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="ps-0" scope="row">Email:</th>
+                                                        <td class="text-muted">{{ $profile->email }}</td>
+                                                    </tr>
 
                                                 </tbody>
                                             </table>
@@ -176,7 +186,7 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title mb-3">Tiểu sử</h5>
-                                        {{$profile->description}}
+                                        {{ $profile->description }}
                                         <!--end row-->
                                     </div>
                                     <!--end card-body-->
@@ -199,28 +209,28 @@
                                                                     <div class="accordion-item border-0">
                                                                         <div class="accordion-header" id="headingOne">
                                                                             <a class="accordion-button p-2 shadow-none"
-                                                                               data-bs-toggle="collapse"
-                                                                               href="#collapseOne" aria-expanded="true">
+                                                                                data-bs-toggle="collapse"
+                                                                                href="#collapseOne" aria-expanded="true">
                                                                                 <div class="d-flex">
                                                                                     <div class="flex-shrink-0">
                                                                                         <img src="{{ asset('assets/images/users/avatar-2.jpg') }}"
-                                                                                             alt=""
-                                                                                             class="avatar-xs rounded-circle"/>
+                                                                                            alt=""
+                                                                                            class="avatar-xs rounded-circle" />
                                                                                     </div>
                                                                                     <div class="flex-grow-1 ms-3">
                                                                                         <h6 class="fs-14 mb-1">
                                                                                             {{ $post->title }}
                                                                                         </h6>
                                                                                         <small
-                                                                                                class="text-muted">{{ $post->created_at }}</small>
+                                                                                            class="text-muted">{{ $post->created_at }}</small>
                                                                                     </div>
                                                                                 </div>
                                                                             </a>
                                                                         </div>
                                                                         <div id="collapseOne"
-                                                                             class="accordion-collapse collapse show"
-                                                                             aria-labelledby="headingOne"
-                                                                             data-bs-parent="#accordionExample">
+                                                                            class="accordion-collapse collapse show"
+                                                                            aria-labelledby="headingOne"
+                                                                            data-bs-parent="#accordionExample">
                                                                             <div class="accordion-body ms-2 ps-5">
                                                                                 {{ $post->excerpt }}
                                                                             </div>
@@ -252,11 +262,11 @@
                                     <div class="acitivity-item d-flex">
                                         <div class="flex-shrink-0">
                                             <img src="{{ asset('assets/images/users/avatar-1.jpg') }}" alt=""
-                                                 class="avatar-xs rounded-circle acitivity-avatar"/>
+                                                class="avatar-xs rounded-circle acitivity-avatar" />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h6 class="mb-1">Oliver Phillips <span
-                                                        class="badge bg-primary-subtle text-primary align-middle">New</span>
+                                                    class="badge bg-primary-subtle text-primary align-middle">New</span>
                                             </h6>
                                             <p class="text-muted mb-2">We talked about a project on
                                                 linkedin.</p>
@@ -271,29 +281,28 @@
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h6 class="mb-1">Nancy Martino <span
-                                                        class="badge bg-secondary-subtle text-secondary align-middle">In
+                                                    class="badge bg-secondary-subtle text-secondary align-middle">In
                                                     Progress</span>
                                             </h6>
-                                            <p class="text-muted mb-2"><i
-                                                        class="ri-file-text-line align-middle ms-2"></i>
+                                            <p class="text-muted mb-2"><i class="ri-file-text-line align-middle ms-2"></i>
                                                 Create
                                                 new project Buildng product</p>
                                             <div class="avatar-group mb-2">
                                                 <a href="javascript: void(0);" class="avatar-group-item"
-                                                   data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                   data-bs-original-title="Christi">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title="Christi">
                                                     <img src="{{ asset('assets/images/users/avatar-4.jpg') }}"
-                                                         alt="" class="rounded-circle avatar-xs"/>
+                                                        alt="" class="rounded-circle avatar-xs" />
                                                 </a>
                                                 <a href="javascript: void(0);" class="avatar-group-item"
-                                                   data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                   data-bs-original-title="Frank Hook">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title="Frank Hook">
                                                     <img src="{{ asset('assets/images/users/avatar-3.jpg') }}"
-                                                         alt="" class="rounded-circle avatar-xs"/>
+                                                        alt="" class="rounded-circle avatar-xs" />
                                                 </a>
                                                 <a href="javascript: void(0);" class="avatar-group-item"
-                                                   data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                   data-bs-original-title=" Ruby">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title=" Ruby">
                                                     <div class="avatar-xs">
                                                         <div class="avatar-title rounded-circle bg-light text-primary">
                                                             R
@@ -301,8 +310,8 @@
                                                     </div>
                                                 </a>
                                                 <a href="javascript: void(0);" class="avatar-group-item"
-                                                   data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                                                   data-bs-original-title="more">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                                    data-bs-original-title="more">
                                                     <div class="avatar-xs">
                                                         <div class="avatar-title rounded-circle">
                                                             2+
@@ -316,11 +325,11 @@
                                     <div class="acitivity-item py-3 d-flex">
                                         <div class="flex-shrink-0">
                                             <img src="{{ asset('assets/images/users/avatar-2.jpg') }}" alt=""
-                                                 class="avatar-xs rounded-circle acitivity-avatar"/>
+                                                class="avatar-xs rounded-circle acitivity-avatar" />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h6 class="mb-1">Natasha Carey <span
-                                                        class="badge bg-success-subtle text-success align-middle">Completed</span>
+                                                    class="badge bg-success-subtle text-success align-middle">Completed</span>
                                             </h6>
                                             <p class="text-muted mb-2">Adding a new event with
                                                 attachments</p>
@@ -329,17 +338,17 @@
                                                     <div class="row border border-dashed gx-2 p-2 mb-2">
                                                         <div class="col-4">
                                                             <img src="{{ asset('assets/images/small/img-2.jpg') }}"
-                                                                 alt="" class="img-fluid rounded"/>
+                                                                alt="" class="img-fluid rounded" />
                                                         </div>
                                                         <!--end col-->
                                                         <div class="col-4">
                                                             <img src="{{ asset('assets/images/small/img-3.jpg') }}"
-                                                                 alt="" class="img-fluid rounded"/>
+                                                                alt="" class="img-fluid rounded" />
                                                         </div>
                                                         <!--end col-->
                                                         <div class="col-4">
                                                             <img src="{{ asset('assets/images/small/img-4.jpg') }}"
-                                                                 alt="" class="img-fluid rounded"/>
+                                                                alt="" class="img-fluid rounded" />
                                                         </div>
                                                         <!--end col-->
                                                     </div>
@@ -352,7 +361,7 @@
                                     <div class="acitivity-item py-3 d-flex">
                                         <div class="flex-shrink-0">
                                             <img src="{{ asset('assets/images/users/avatar-6.jpg') }}" alt=""
-                                                 class="avatar-xs rounded-circle acitivity-avatar"/>
+                                                class="avatar-xs rounded-circle acitivity-avatar" />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h6 class="mb-1">Bethany Johnson</h6>
@@ -371,7 +380,7 @@
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h6 class="mb-1">Your order is placed <span
-                                                        class="badge bg-danger-subtle text-danger align-middle ms-1">Out of
+                                                    class="badge bg-danger-subtle text-danger align-middle ms-1">Out of
                                                     Delivery</span>
                                             </h6>
                                             <p class="text-muted mb-2">These customers can rest assured
@@ -382,7 +391,7 @@
                                     <div class="acitivity-item py-3 d-flex">
                                         <div class="flex-shrink-0">
                                             <img src="{{ asset('assets/images/users/avatar-7.jpg') }}" alt=""
-                                                 class="avatar-xs rounded-circle acitivity-avatar"/>
+                                                class="avatar-xs rounded-circle acitivity-avatar" />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h6 class="mb-1">Lewis Pratt</h6>
@@ -405,7 +414,7 @@
                                             <p class="text-muted mb-2">
                                                 <span class="text-danger">2 days left</span> notification to
                                                 submit the monthly sales report. <a href="javascript:void(0);"
-                                                                                    class="link-warning text-decoration-underline">Reports
+                                                    class="link-warning text-decoration-underline">Reports
                                                     Builder</a>
                                             </p>
                                             <small class="mb-0 text-muted">15 Oct</small>
@@ -414,11 +423,11 @@
                                     <div class="acitivity-item d-flex">
                                         <div class="flex-shrink-0">
                                             <img src="{{ asset('assets/images/users/avatar-8.jpg') }}" alt=""
-                                                 class="avatar-xs rounded-circle acitivity-avatar"/>
+                                                class="avatar-xs rounded-circle acitivity-avatar" />
                                         </div>
                                         <div class="flex-grow-1 ms-3">
                                             <h6 class="mb-1">New ticket received <span
-                                                        class="badge bg-success-subtle text-success align-middle">Completed</span>
+                                                    class="badge bg-success-subtle text-success align-middle">Completed</span>
                                             </h6>
                                             <p class="text-muted mb-2">User <span class="text-secondary">Erica245</span>
                                                 submitted a ticket.</p>
@@ -442,7 +451,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Chat
+                                                                class="text-body">Chat
                                                                 App Update</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">2 year Ago</span>
@@ -466,21 +475,21 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-3.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <div
-                                                                                class="avatar-title rounded-circle bg-light text-primary">
+                                                                            class="avatar-title rounded-circle bg-light text-primary">
                                                                             J
                                                                         </div>
                                                                     </div>
@@ -501,7 +510,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">ABC
+                                                                class="text-body">ABC
                                                                 Project Customization</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">2 month Ago</span>
@@ -525,28 +534,28 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-8.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-7.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-6.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <div
-                                                                                class="avatar-title rounded-circle bg-primary">
+                                                                            class="avatar-title rounded-circle bg-primary">
                                                                             2+
                                                                         </div>
                                                                     </div>
@@ -567,7 +576,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Client
+                                                                class="text-body">Client
                                                                 - Frank Hook</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">1 hr Ago</span>
@@ -591,14 +600,14 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-4.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <div
-                                                                                class="avatar-title rounded-circle bg-light text-primary">
+                                                                            class="avatar-title rounded-circle bg-light text-primary">
                                                                             M
                                                                         </div>
                                                                     </div>
@@ -606,8 +615,8 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-3.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -626,7 +635,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Velzon
+                                                                class="text-body">Velzon
                                                                 Project</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">11 hr Ago</span>
@@ -650,15 +659,15 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-7.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-5.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -677,7 +686,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Brand
+                                                                class="text-body">Brand
                                                                 Logo Design</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">10 min Ago</span>
@@ -701,21 +710,21 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-7.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-6.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <div
-                                                                                class="avatar-title rounded-circle bg-light text-primary">
+                                                                            class="avatar-title rounded-circle bg-light text-primary">
                                                                             E
                                                                         </div>
                                                                     </div>
@@ -736,7 +745,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Chat
+                                                                class="text-body">Chat
                                                                 App</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">8 hr Ago</span>
@@ -760,7 +769,7 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <div
-                                                                                class="avatar-title rounded-circle bg-light text-primary">
+                                                                            class="avatar-title rounded-circle bg-light text-primary">
                                                                             R
                                                                         </div>
                                                                     </div>
@@ -768,15 +777,15 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-3.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-8.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -795,7 +804,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Project
+                                                                class="text-body">Project
                                                                 Update</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">48 min Ago</span>
@@ -819,22 +828,22 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-6.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-5.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-4.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -853,7 +862,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Client
+                                                                class="text-body">Client
                                                                 - Jennifer</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">30 min Ago</span>
@@ -877,8 +886,8 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-1.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -897,7 +906,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Bsuiness
+                                                                class="text-body">Bsuiness
                                                                 Template - UI/UX design</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">7 month Ago</span>
@@ -920,28 +929,28 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-2.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-3.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-4.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <div
-                                                                                class="avatar-title rounded-circle bg-primary">
+                                                                            class="avatar-title rounded-circle bg-primary">
                                                                             2+
                                                                         </div>
                                                                     </div>
@@ -958,12 +967,12 @@
                                     <!--end col-->
                                     <div class="col-xxl-3 col-sm-6">
                                         <div
-                                                class="card profile-project-card shadow-none mb-xxl-0  profile-project-success">
+                                            class="card profile-project-card shadow-none mb-xxl-0  profile-project-success">
                                             <div class="card-body p-4">
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Update
+                                                                class="text-body">Update
                                                                 Project</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">1 month Ago</span>
@@ -986,14 +995,14 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-7.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid">
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid">
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <div
-                                                                                class="avatar-title rounded-circle bg-light text-primary">
+                                                                            class="avatar-title rounded-circle bg-light text-primary">
                                                                             A
                                                                         </div>
                                                                     </div>
@@ -1012,7 +1021,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">Bank
+                                                                class="text-body">Bank
                                                                 Management System</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">10 month Ago</span>
@@ -1035,28 +1044,28 @@
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-7.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-6.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <img src="{{ asset('assets/images/users/avatar-5.jpg') }}"
-                                                                             alt=""
-                                                                             class="rounded-circle img-fluid"/>
+                                                                            alt=""
+                                                                            class="rounded-circle img-fluid" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="avatar-group-item">
                                                                     <div class="avatar-xs">
                                                                         <div
-                                                                                class="avatar-title rounded-circle bg-primary">
+                                                                            class="avatar-title rounded-circle bg-primary">
                                                                             2+
                                                                         </div>
                                                                     </div>
@@ -1075,7 +1084,7 @@
                                                 <div class="d-flex">
                                                     <div class="flex-grow-1 text-muted overflow-hidden">
                                                         <h5 class="fs-14 text-truncate"><a href="#"
-                                                                                           class="text-body">PSD
+                                                                class="text-body">PSD
                                                                 to HTML Convert</a></h5>
                                                         <p class="text-muted text-truncate mb-0">Last Update
                                                             : <span class="fw-semibold text-body">29 min Ago</span>

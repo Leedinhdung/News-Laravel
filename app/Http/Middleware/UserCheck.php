@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAdmin
+class UserCheck
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,6 @@ class CheckAdmin
 
             return $next($request);
         }
-        return redirect()->route('login')->with('error', 'Chỉ admin mới được vào trang này !');
-        // return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để vào trang này');
+        return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để sử dụng chức năng !');
     }
 }

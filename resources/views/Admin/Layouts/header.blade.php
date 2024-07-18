@@ -520,13 +520,19 @@
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            @php
-                                if (\Illuminate\Support\Facades\Auth::user()) {
-                                    $url = \Illuminate\Support\Facades\Storage::url(Auth::user()->thumbnail);
-                                }
-                            @endphp
-                            <img class="rounded-circle header-profile-user" src="{{ $url }}"
-                                alt="Header Avatar" />
+                            @if (Auth::user()->thumbnail)
+                                @php
+                                    if (\Illuminate\Support\Facades\Auth::user()) {
+                                        $url = \Illuminate\Support\Facades\Storage::url(Auth::user()->thumbnail);
+                                    }
+                                @endphp
+                                <img class="rounded-circle header-profile-user" src="{{ $url }}"
+                                    alt="Header Avatar" />
+                            @else
+                                <img class="rounded-circle header-profile-user"
+                                    src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
+                                    alt="Header Avatar" />
+                            @endif
                             {{-- @php
                                 dd($url);
                             @endphp --}}
@@ -537,7 +543,7 @@
                                         {{ Auth::user()->last_name }}</span>
                                     <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">
 
-                                        {{ Auth::user()->roles->first()->name }}
+                                        {{-- {{ Auth::user()->roles ? Auth::user()->roles->first()->display_name : '' }} --}}
 
                                     </span>
                                 </span>
@@ -555,6 +561,9 @@
                             <a class="dropdown-item" href="apps-chat.html"><i
                                     class="mdi mdi-message-text-outline text-muted fs-16 align-middle me-1"></i>
                                 <span class="align-middle">Tin nhắn</span></a>
+                            <a class="dropdown-item" href="{{ route('home') }}"><i
+                                    class="mdi mdi-home-outline text-muted fs-16 align-middle me-1"></i>
+                                <span class="align-middle">Trang chủ</span></a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="pages-profile-settings.html"><span
                                     class="badge bg-success-subtle text-success mt-1 float-end">New</span><i

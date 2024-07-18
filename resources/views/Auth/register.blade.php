@@ -40,7 +40,7 @@
                                 <div class="col-lg-6">
                                     <div class="p-lg-5 p-4 auth-one-bg h-100">
                                         <div class="bg-overlay"></div>
-                                        <div class="position-relative h-100 d-flex flex-column">
+                                        {{-- <div class="position-relative h-100 d-flex flex-column">
                                             <div class="mb-4">
                                                 <a href="index.html" class="d-block">
                                                     <img src="{{ asset('assets/images/logo-light.png') }}"
@@ -87,15 +87,15 @@
                                                 <!-- end carousel -->
 
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="p-lg-5 p-4">
                                         <div>
-                                            <h5 class="text-primary">Register Account</h5>
-                                            <p class="text-muted">Get your Free Velzon account now.</p>
+                                            <h5 class="text-primary">Đăng ký tài khoản</h5>
+                                            <p class="text-muted">Tạo tài khoản của bạn ngay</p>
                                         </div>
 
                                         <div class="mt-4">
@@ -104,10 +104,10 @@
                                                 @csrf
                                                 <div class="row">
                                                     <div class="col-6 mb-3">
-                                                        <label for="firstname" class="form-label">First Name <span
+                                                        <label for="firstname" class="form-label">Họ<span
                                                                 class="text-danger">*</span></label>
                                                         <input name="first_name" type="text" class="form-control"
-                                                             placeholder="Enter your first name"
+                                                             placeholder="Nhập họ của bạn"
                                                             value="{{ old('first_name') }}">
                                                         @error('first_name')
                                                             <div class="text-danger">{{ $message }}</div>
@@ -115,10 +115,10 @@
                                                     </div>
 
                                                     <div class="col-6 mb-3">
-                                                        <label for="lastname" class="form-label">Last Name <span
+                                                        <label for="lastname" class="form-label">Tên<span
                                                                 class="text-danger">*</span></label>
                                                         <input name="last_name" type="text" class="form-control"
-                                                             placeholder="Enter your last name" value="{{ old('last_name') }}">
+                                                             placeholder="Nhập tên của bạn" value="{{ old('last_name') }}">
                                                         @error('last_name')
                                                             <div class="text-danger">{{ $message }}</div>
                                                         @enderror
@@ -128,26 +128,26 @@
                                                     <label for="useremail" class="form-label">Email <span
                                                             class="text-danger">*</span></label>
                                                     <input name="email" type="email" class="form-control"
-                                                         placeholder="Enter email address" value="{{ old('email') }}">
+                                                         placeholder="Nhập địa chỉ email" value="{{ old('email') }}">
                                                     @error('email')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="username" class="form-label">Username <span
+                                                    <label for="username" class="form-label">Tên tài khoản <span
                                                             class="text-danger">*</span></label>
                                                     <input name="username" type="text" class="form-control"
-                                                        placeholder="Enter username" value="{{ old('username') }}">
+                                                        placeholder="Nhập tên tài khoản" value="{{ old('username') }}">
                                                     @error('username')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="password-input">Password</label>
+                                                    <label class="form-label" for="password-input">Mật khẩu</label>
                                                     <div class="position-relative ">
                                                         <input name="password" type="password"
-                                                            class="form-control pe-5 " placeholder="Enter password"
+                                                            class="form-control pe-5 " placeholder="Nhập mật khẩu"
                                                            >
                                                         @error('password')
                                                             <div class="text-danger">{{ $message }}</div>
@@ -156,12 +156,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label class="form-label" for="password-input">Confirm
-                                                        Password</label>
+                                                    <label class="form-label" for="password-input">Xác nhận mật khẩu</label>
                                                     <div class="position-relative auth-pass-inputgroup">
                                                         <input name="password_confirmation" type="password"
                                                             class="form-control pe-5 "
-                                                            placeholder="Enter confirm password">
+                                                            placeholder="Xác nhận mật khẩu">
                                                         @error('password_confirmation')
                                                             <div class="text-danger">{{ $message }}</div>
                                                         @enderror
@@ -169,21 +168,14 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="mb-4">
-                                                    <p class="mb-0 fs-12 text-muted fst-italic">By registering you
-                                                        agree to
-                                                        the Velzon <a href="#"
-                                                            class="text-primary text-decoration-underline fst-normal fw-medium">Terms
-                                                            of Use</a></p>
-                                                </div>
+                                                
                                                 <div class="mt-4">
-                                                    <button class="btn btn-success w-100" type="submit">Sign
-                                                        Up</button>
+                                                    <button class="btn btn-success w-100" type="submit">Đăng ký</button>
                                                 </div>
 
                                                 <div class="mt-4 text-center">
                                                     <div class="signin-other-title">
-                                                        <h5 class="fs-13 mb-4 title text-muted">Create account with
+                                                        <h5 class="fs-13 mb-4 title text-muted">Đăng ký tài khoản với
                                                         </h5>
                                                     </div>
 
@@ -206,10 +198,10 @@
                                         </div>
 
                                         <div class="mt-5 text-center">
-                                            <p class="mb-0">Already have an account ? <a
+                                            <p class="mb-0">Bạn đã có tài khoản ? <a
                                                     href="{{ route('login') }}"
                                                     class="fw-semibold text-primary text-decoration-underline">
-                                                    Signin</a></p>
+                                                    Đăng nhập</a></p>
                                         </div>
                                     </div>
                                 </div>

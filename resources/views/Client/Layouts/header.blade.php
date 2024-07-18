@@ -72,13 +72,20 @@
                 <a href="" class="" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <span class="d-flex align-items-center">
-                        @php
-                            if (\Illuminate\Support\Facades\Auth::user()) {
-                                $url = \Illuminate\Support\Facades\Storage::url(Auth::user()->thumbnail);
-                            }
-                        @endphp
-                        <img class="rounded-circle header-profile-user" src="{{ $url }}" alt="Header Avatar"
-                            width="40" />
+                        @if (Auth::user()->thumbnail)
+                            @php
+                                if (\Illuminate\Support\Facades\Auth::user()) {
+                                    $url = \Illuminate\Support\Facades\Storage::url(Auth::user()->thumbnail);
+                                }
+                            @endphp
+                            <img class="rounded-circle header-profile-user" src="{{ $url }}"
+                                alt="Header Avatar" width="40" />
+                        @else
+                            <img class="rounded-circle header-profile-user"
+                                src="https://cellphones.com.vn/sforum/wp-content/uploads/2023/10/avatar-trang-4.jpg"
+                                alt="Header Avatar" width="40" />
+                        @endif
+
                     </span>
                 </a>
                 <div class="dropdown-menu ">

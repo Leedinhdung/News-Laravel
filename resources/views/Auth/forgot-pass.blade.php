@@ -40,7 +40,7 @@
                             <div class="col-lg-6">
                                 <div class="p-lg-5 p-4 auth-one-bg h-100">
                                     <div class="bg-overlay"></div>
-                                    <div class="position-relative h-100 d-flex flex-column">
+                                    {{-- <div class="position-relative h-100 d-flex flex-column">
                                         <div class="mb-4">
                                             <a href="index.html" class="d-block">
                                                 <img src="{{asset('assets/images/logo-light.png')}}" alt=""
@@ -83,7 +83,7 @@
                                             </div>
                                             <!-- end carousel -->
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <!-- end col -->
@@ -108,7 +108,7 @@
                                             <div class="mb-4">
                                                 <label class="form-label">Email</label>
                                                 <input type="email" class="form-control" id="email"
-                                                       placeholder="Enter email address" name="email">
+                                                       placeholder="Nhập địa chỉ email" name="email">
                                             </div>
 
                                             <div class="text-center mt-4">
