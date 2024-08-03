@@ -95,10 +95,12 @@
                         <i class="mdi mdi-account-circle "></i>
                         <span class="align-middle">Thông tin cá nhân</span>
                     </a>
-                    <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                        <i class="mdi mdi-account-key-outline"></i>
-                        <span class="align-middle">Trang quản trị</span>
-                    </a>
+                    @if (Auth::user()->type == 'admin')
+                        <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
+                            <i class="mdi mdi-account-key-outline"></i>
+                            <span class="align-middle">Trang quản trị</span>
+                        </a>
+                    @endif
                     <a class="dropdown-item" href="apps-chat.html">
                         <i class="mdi mdi-message-text-outline "></i>
                         <span class="align-middle">Tin nhắn</span>

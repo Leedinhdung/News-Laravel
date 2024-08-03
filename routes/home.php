@@ -12,4 +12,6 @@ Route::prefix('')->as('')->group(function () {
     Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
     Route::post('/lien-he', [HomeController::class, 'sendContact'])->name('send-contact');
     Route::get('/gioi-thieu', [HomeController::class, 'about'])->name('about');
+    Route::post('/increment-view', [HomeController::class, 'incrementView'])->name('increment-view');
+
 });

@@ -65,6 +65,38 @@
 
     <!-- Main Script -->
     <script src="{{ asset('client/js/script.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.post-title').on('click', function(e) {
+                e.preventDefault();
+                var postId = $(this).data('id');
+                var url = $(this).attr('href');
+
+                $.ajax({
+                    url: '{{ route('increment-view') }}',
+                    type: 'POST',
+                    data: {
+                        id: postId,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            window.location.href = url;
+                        } else {
+                            console.error('Failed to increment view.');
+                            window.location.href = url;
+                        }
+                    },
+                    error: function() {
+                        console.error('Error in AJAX request.');
+                        window.location.href = url;
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>

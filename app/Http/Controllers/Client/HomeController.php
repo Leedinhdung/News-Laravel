@@ -107,5 +107,14 @@ class HomeController extends Controller
 
         return back();
     }
-   
+    public function incrementView(Request $request)
+    {
+        $post = Post::find($request->id);
+        if ($post) {
+            $post->views += 1;
+            $post->save();
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false]);
+    }
 }

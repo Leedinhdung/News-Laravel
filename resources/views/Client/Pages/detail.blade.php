@@ -42,7 +42,7 @@
 
                         <div>
                             <span class="h6">Lượt xem:</span>
-                            <span class="h6">30</span>
+                            <span class="h6">{{ $post->views }}</span>
                         </div>
 
 

@@ -45,6 +45,7 @@ class UserController extends Controller
             DB::beginTransaction();
             $data = $request->except('thumbnail');
             $data['password'] = bcrypt($request->password);
+            $data['type'] = 'admin';
             if ($request->hasFile('thumbnail')) {
                 $data['thumbnail'] = Storage::put(self::PATH_UPLOAD, $request->file('thumbnail'));
             }

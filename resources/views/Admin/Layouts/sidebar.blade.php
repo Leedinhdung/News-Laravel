@@ -38,7 +38,7 @@
 
                 </li>
                 <!-- end Dashboard Menu -->
-                @canany(['catalogue.add', 'catalogue.list', 'catalogue.edit', 'catalogue.delete'])
+                @canany(['category.add', 'category.list', 'category.edit', 'category.delete'])
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="#sidebarCatalogues" data-bs-toggle="collapse" role="button"
                             aria-expanded="false" aria-controls="sidebarCatalogues">
@@ -48,12 +48,12 @@
                         </a>
                         <div class="collapse menu-dropdown" id="sidebarCatalogues">
                             <ul class="nav nav-sm flex-column">
-                                @can('catalogue.list')
+                                @can('category.list')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.catalogues.index') }}" class="nav-link">Danh sách</a>
                                     </li>
                                 @endcan
-                                @can('catalogue.add')
+                                @can('category.add')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.catalogues.create') }}" class="nav-link">Thêm mới</a>
                                     </li>
@@ -127,11 +127,11 @@
                                         <a href="{{ route('admin.role.create') }}" class="nav-link">Thêm mới vai trò</a>
                                     </li>
                                 @endcan
-                                @can('permission.add')
+                                {{-- @can('permission.add') --}}
                                     <li class="nav-item">
                                         <a href="{{ route('admin.permission.create') }}" class="nav-link">Thêm mới quyền</a>
                                     </li>
-                                @endcan
+                                {{-- @endcan --}}
                                 @can('role.list')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.role.index') }}" class="nav-link">Danh sách vai trò</a>

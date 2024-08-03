@@ -59,35 +59,44 @@
                 stroke-width="2" />
         </svg>
     </div>
-
     <section class="section pb-0">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 mb-5">
-                    @foreach ($searched as $item)
-                        <article class="card mb-4">
-                            <div class="card-body d-flex">
-                                @php
-                                    $url = \Illuminate\Support\Facades\Storage::url($item->thumbnail);
-                                @endphp
-                                <img class="card-img-sm" src="{{ $url }}" alt="">
-                                <div class="ml-3">
-                                    <h4><a href="{{ route('detail-post', ['id' => $item->id, 'slug' => $item->slug]) }}"
-                                            class="post-title">{{ $item->title }}</a>
-                                    </h4>
-                                    <p class="text-sm-start">{{ $item->excerpt }}</p>
-                                    <ul class="card-meta list-inline mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <i class="ti-calendar"></i>{{ $formattedDate }}
-                                        </li>
-                                    </ul>
+                    @if ($searched && count($searched) > 0)
+                        @foreach ($searched as $item)
+                            <article class="card mb-4">
+                                <div class="card-body d-flex">
+                                    @php
+                                        $url = \Illuminate\Support\Facades\Storage::url($item->thumbnail);
+                                    @endphp
+                                    <img class="card-img-sm" src="{{ $url }}" alt="">
+                                    <div class="ml-3">
+                                        <h4>
+                                            <a href="{{ route('detail-post', ['id' => $item->id, 'slug' => $item->slug]) }}"
+                                                class="post-title" data-id="{{ $item->id }}">
+                                                {{ $item->title }}
+                                            </a>
+                                        </h4>
+                                        <p class="text-sm-start">{{ $item->excerpt }}
+                                        </p>
+                                        <ul class="card-meta list-inline mb-0">
+                                            <li class="list-inline-item mb-0">
+                                                <i class="ti-calendar"></i>{{ $formattedDate }}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
-                    @endforeach
+                            </article>
+                        @endforeach
+                    @else
+                        <div class="my-5">
+                            <h4>Không có bài viết nào phù hợp với từ khóa bạn đang tìm kiếm.
+                            </h4>
+                            <p> Không có kết quả tìm kiếm nào được tìm thấy.</p>
+                        </div>
+                    @endif
                 </div>
-
-
 
                 <div class="col-12">
                     <div class="border-bottom border-default"></div>
@@ -95,6 +104,7 @@
             </div>
         </div>
     </section>
+
 
     {{-- <section class="section-sm">
         <div class="container">

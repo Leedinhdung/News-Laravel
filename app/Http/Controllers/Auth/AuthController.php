@@ -30,7 +30,6 @@ class AuthController extends Controller
         User::query()->create($data);
         return redirect()->route('login')->with('success', 'Bạn đã đăng ký thành công!');
     }
-
     public function formLogin()
     {
         return view('auth.login');
