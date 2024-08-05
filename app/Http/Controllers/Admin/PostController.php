@@ -25,9 +25,9 @@ class PostController extends Controller
 
     public function index()
     {
-        $all = Post::query()->where('is_active', 1)->count('id');
+        $all = Post::query()->count('id');
         $trash = Post::onlyTrashed()->count('id');
-        $data = Post::query()->where('is_active', 1)->get();
+        $data = Post::query()->get();
         return view(self::PATH_VIEW . __FUNCTION__, compact('data', 'all', 'trash'));
     }
 

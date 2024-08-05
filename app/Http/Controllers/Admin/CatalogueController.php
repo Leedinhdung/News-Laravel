@@ -20,7 +20,7 @@ class CatalogueController extends Controller
 
     public function index()
     {
-        $all = Catalogue::query()->where('is_active', 1)->count('id');
+        $all = Catalogue::query()->count('id');
         $trash = Catalogue::onlyTrashed()->count('id');
         $data = Catalogue::with('children')->get();
         // dd($data);

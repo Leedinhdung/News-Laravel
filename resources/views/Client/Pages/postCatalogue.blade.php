@@ -31,7 +31,7 @@
                                     <p class="text-sm-start">{{ $item->excerpt }}</p>
                                     <ul class="card-meta list-inline mb-0">
                                         <li class="list-inline-item mb-0">
-                                            <i class="ti-calendar"></i>{{ $formattedDate }}
+                                            <i class="ti-calendar"></i>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y') }}
                                         </li>
                                     </ul>
                                 </div>
@@ -50,50 +50,25 @@
                             <button type="submit" class="btn btn-primary btn-block">Search</button>
                         </form>
                     </div>
-                    <!-- Promotion -->
-                    <div class="promotion">
-                        <img src="{{ asset('client/images/promotion.jpg') }}" class="img-fluid w-100">
-                        <div class="promotion-content">
-                            <h5 class="text-white mb-3">Create Stunning Website!!</h5>
-                            <p class="text-white mb-4">Lorem ipsum dolor sit amet, consectetur sociis. Etiam nunc amet
-                                id
-                                dignissim. Feugiat id tempor vel sit ornare turpis posuere.</p>
-                            <a href="https://themefisher.com/" class="btn btn-primary">Get Started</a>
-                        </div>
+                    <div class="widget widget-categories">
+                        <h4 class="widget-title"><span>Danh mục</span></h4>
+                        <ul class="list-unstyled widget-list">
+                            @foreach ($menu as $item)
+                                <li><a href="{{ route('catalogue-news', ['id' => $item->id, 'slug' => $item->slug]) }}"
+                                        class="d-flex">{{ $item->name }}</a>
+                                </li>
+                            @endforeach
+
+
+                        </ul>
                     </div>
+                    <!-- about me -->
+
+                    <!-- Promotion -->
+
 
                     <!-- authors -->
-                    <div class="widget widget-author">
-                        <h4 class="widget-title">Authors</h4>
-                        <div class="media align-items-center">
-                            <div class="mr-3">
-                                <img class="widget-author-image" src="{{ asset('client/images/john-doe.jpg') }}">
-                            </div>
-                            <div class="media-body">
-                                <h5 class="mb-1"><a class="post-title" href="author-single.html">Charls Xaviar</a></h5>
-                                <span>Author &amp; developer of Bexer, Biztrox theme</span>
-                            </div>
-                        </div>
-                        <div class="media align-items-center">
-                            <div class="mr-3">
-                                <img class="widget-author-image" src="{{ asset('client/images/kate-stone.jpg') }}">
-                            </div>
-                            <div class="media-body">
-                                <h5 class="mb-1"><a class="post-title" href="author-single.html">Kate Stone</a></h5>
-                                <span>Author &amp; developer of Bexer, Biztrox theme</span>
-                            </div>
-                        </div>
-                        <div class="media align-items-center">
-                            <div class="mr-3">
-                                <img class="widget-author-image" src="{{ asset('client/images/john-doe.jpg') }}"
-                                    alt="John Doe">
-                            </div>
-                            <div class="media-body">
-                                <h5 class="mb-1"><a class="post-title" href="author-single.html">John Doe</a></h5>
-                                <span>Author &amp; developer of Bexer, Biztrox theme</span>
-                            </div>
-                        </div>
-                    </div>
+
                     <!-- Search -->
 
                     <div class="widget">
@@ -112,73 +87,19 @@
                     </div>
 
                     <!-- categories -->
-                    <div class="widget widget-categories">
-                        <h4 class="widget-title"><span>Categories</span></h4>
-                        <ul class="list-unstyled widget-list">
-                            <li><a href="tags.html" class="d-flex">Creativity <small class="ml-auto">(4)</small></a>
-                            </li>
-
-                        </ul>
-                    </div><!-- tags -->
+                    <!-- tags -->
+                    <!-- recent post -->
+                   
                     <div class="widget">
                         <h4 class="widget-title"><span>Tags</span></h4>
                         <ul class="list-inline widget-list-inline widget-card">
                             <li class="list-inline-item"><a href="tags.html">City</a></li>
                             <li class="list-inline-item"><a href="tags.html">Color</a></li>
+                            <li class="list-inline-item"><a href="tags.html">Creative</a></li>
+                            <li class="list-inline-item"><a href="tags.html">Decorate</a></li>
+                            <li class="list-inline-item"><a href="tags.html">Demo</a></li>
                         </ul>
-                    </div><!-- recent post -->
-                    <div class="widget">
-                        <h4 class="widget-title">Recent Post</h4>
-
-                        <!-- post-item -->
-                        <article class="widget-card">
-                            <div class="d-flex">
-                                <img class="card-img-sm" src="{{ asset('client/images/post/post-10.jpg') }}">
-                                <div class="ml-3">
-                                    <h5><a class="post-title" href="post/elements/">Elements That You Can Use In This
-                                            Template.</a></h5>
-                                    <ul class="card-meta list-inline mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <i class="ti-calendar"></i>15 jan, 2020
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="widget-card">
-                            <div class="d-flex">
-                                <img class="card-img-sm" src="{{ asset('client/images/post/post-3.jpg') }}">
-                                <div class="ml-3">
-                                    <h5><a class="post-title" href="post-details.html">Advice From a Twenty
-                                            Something</a>
-                                    </h5>
-                                    <ul class="card-meta list-inline mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <i class="ti-calendar"></i>14 jan, 2020
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </article>
-
-                        <article class="widget-card">
-                            <div class="d-flex">
-                                <img class="card-img-sm" src="{{ asset('client/images/post/post-7.jpg') }}">
-                                <div class="ml-3">
-                                    <h5><a class="post-title" href="post-details.html">Advice From a Twenty
-                                            Something</a>
-                                    </h5>
-                                    <ul class="card-meta list-inline mb-0">
-                                        <li class="list-inline-item mb-0">
-                                            <i class="ti-calendar"></i>14 jan, 2020
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </article>
                     </div>
-
                     <!-- Social -->
                     <div class="widget">
                         <h4 class="widget-title"><span>Social Links</span></h4>

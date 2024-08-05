@@ -11,15 +11,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    const PATH_UPLOAD = 'users';
     public function index()
     {
         $menu = Catalogue::query()->where([['is_active', 1]])->get();
+
+
+        $menu->each(function ($item) use ($menu) {
+            $item->has_children = $menu->where('parent_id', $item->id)->isNotEmpty();
+        });
+
         //        dd($menu);
         $post = Post::query()->where([['is_active', 1]])->limit(4)->get();
         $date = Post::query()->first();
@@ -38,6 +46,10 @@ class HomeController extends Controller
     public function PostByCatalogue($id)
     {
         $menu = Catalogue::query()->where([['is_active', 1]])->get();
+        $menu->each(function ($item) use ($menu) {
+            $item->has_children = $menu->where('parent_id', $item->id)->isNotEmpty();
+        });
+
         $catalogue = Catalogue::query()->findOrFail($id);
         $post = Post::query()->where('catalogue_id', $id)->get();
         $date = Post::query()->first();
@@ -49,16 +61,25 @@ class HomeController extends Controller
     public function detailPost($id)
     {
         $menu = Catalogue::query()->where([['is_active', 1]])->get();
+        $menu->each(function ($item) use ($menu) {
+            $item->has_children = $menu->where('parent_id', $item->id)->isNotEmpty();
+        });
+
         $post = Post::query()->where([['is_active', 1]])->findOrFail($id);
         $tags = Post::query()->findOrFail($id);
         $date = Post::query()->first();
+        $relatedPosts = Post::where('catalogue_id', $post->catalogue_id)
+            ->where('id', '!=', $post->id)
+            ->take(3)
+            ->get();
+        // dd($relatedPosts);
         $formattedDate = Carbon::parse($date->created_at)->format('d/m/Y');
         //        dd($tags);
         $tagss = explode(',', $post->tags);
         //        dd($tagss);
         //        dd($post);
 
-        return view('client.pages.detail', compact('post', 'menu', 'tagss', 'formattedDate'));
+        return view('client.pages.detail', compact('post', 'menu', 'tagss', 'formattedDate', 'relatedPosts'));
     }
 
     public function contact()
@@ -69,6 +90,9 @@ class HomeController extends Controller
     public function searchNews(Request $request)
     {
         $menu = Catalogue::query()->where([['is_active', 1]])->get();
+        $menu->each(function ($item) use ($menu) {
+            $item->has_children = $menu->where('parent_id', $item->id)->isNotEmpty();
+        });
 
         $post = Post::query()->where([['is_active', 1]])->get();
         $date = Post::query()->first();
@@ -116,5 +140,32 @@ class HomeController extends Controller
             return response()->json(['success' => true]);
         }
         return response()->json(['success' => false]);
+    }
+    public function showProfile()
+    {
+        $menu = Catalogue::query()->where([['is_active', 1]])->get();
+        $menu->each(function ($item) use ($menu) {
+            $item->has_children = $menu->where('parent_id', $item->id)->isNotEmpty();
+        });
+
+        $user = auth()->user();
+        return view('client.pages.profile', compact('user', 'menu'));
+    }
+
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->except('thumbnail');
+        if ($request->hasFile('thumbnail')) {
+            $data['thumbnail'] = Storage::put('users', $request->file('thumbnail'));
+        }
+        // dd($data);
+        $currentImage = $user->thumbnail;
+        $user->update($data);
+        if ($request->hasFile('thumbnail') && $currentImage && Storage::exists($currentImage)) {
+            Storage::delete($currentImage);
+        }
+        // dd($request->all());
+        return redirect()->route('profile')->with('success', 'Thông tin cá nhân đã được cập nhật.');
     }
 }

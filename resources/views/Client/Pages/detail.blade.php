@@ -97,7 +97,31 @@
                         </form>
                     </div>
                 </div>
-
+                <div class="col-md-10 mt-5">
+                    <h3 class="mb-4">Tin tức liên quan</h3>
+                    <div class="row">
+                        @foreach ($relatedPosts as $relatedPost)
+                            <div class="col-md-4 mb-4">
+                                <div class="card">
+                                    <div class="card-img text-center">
+                                        @php
+                                            $relatedUrl = \Illuminate\Support\Facades\Storage::url(
+                                                $relatedPost->thumbnail,
+                                            );
+                                        @endphp
+                                        <img src="{{ $relatedUrl }}" alt="related-post-thumb" class="img-fluid">
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a
+                                                href="{{ route('detail-post', ['id' => $relatedPost->id, 'slug' => $relatedPost->slug]) }}"  data-id="{{ $relatedPost->id }}">{{ $relatedPost->title }}</a>
+                                        </h5>
+                                        <p class="card-text">{{ $relatedPost->excerpt }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </section>

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <h4 class="mb-sm-0">Quản lý bài viết</h4>
+                <h4 class="mb-sm-0">Danh sách bài viết</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
@@ -165,8 +165,8 @@
 
                                                 <li><a href="{{ route('admin.post.show', $item->id) }}"
                                                         class="dropdown-item edit-item-btn"><i
-                                                            class="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                        Chỉnh sửa</a>
+                                                            class="ri-eye-fill align-bottom me-2 text-muted"></i>
+                                                        Xem chi tiết</a>
                                                 </li>
                                                 <li><a href="{{ route('admin.post.edit', $item->id) }}"
                                                         class="dropdown-item edit-item-btn"><i

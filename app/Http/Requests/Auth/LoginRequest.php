@@ -30,10 +30,8 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'username.required' => 'Username is required ',
-            'username.exists' => ' Username already exists',
-            'password.required' => 'Password is required',
-            'password.min' => 'Password must be at least 8 characters',
+            'username.required' => 'Vui lòng nhập tên tài khoản ',
+            'password.required' => 'Vui lòng nhập mật khẩu',
         ];
     }
 }

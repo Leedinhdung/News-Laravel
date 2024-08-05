@@ -153,6 +153,7 @@
                                                     placeholder="Enter your email">
                                             </div>
                                         </div>
+                                        @can('role.edit')
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label class="form-label" for="gen-info-email-input">Vai trò</label>
@@ -169,6 +170,7 @@
                                                 <div class="invalid-feedback">Vui lòng chọn vai trò</div>
                                             </div>
                                         </div>
+                                        @endcan
                                         <!--end col-->
                                         <div class="col-lg-12">
                                             <div class="mb-3 pb-2">

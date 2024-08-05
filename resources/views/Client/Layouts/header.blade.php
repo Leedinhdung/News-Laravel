@@ -4,27 +4,29 @@
             alt="Reader | Hugo Personal Blog Template">
     </a>
     <div class="collapse navbar-collapse text-center order-lg-2 order-3" id="navigation">
-        <ul class="navbar-nav mx-auto">
+        <ul class="navbar-nav">
             @foreach ($menu as $item)
-                <li class="nav-item dropdown">
-                    @if ($item->parent_id == 0)
+                @if ($item->parent_id == 0)
+                    <li class="nav-item dropdown">
                         <a class="nav-link"
                             href="{{ route('catalogue-news', ['id' => $item->id, 'slug' => $item->slug]) }}"
-                            role="button" @if ($item->parent_id != 0) data-toggle="dropdown" @endif
-                            aria-haspopup="true" aria-expanded="false">
-                            {{ $item->name }} <i class="ti-angle-down ml-1"></i>
-                        </a>
-                        @foreach ($menu as $key => $sub_menu)
-                            @if ($sub_menu->parent_id != 0 && $item->id == $sub_menu->parent_id)
-                                <div class="dropdown-menu">
-                                    <a class=""
-                                        href="{{ route('catalogue-news', ['id' => $sub_menu->id, 'slug' => $sub_menu->slug]) }}">{{ $sub_menu->name }}</a>
-                                </div>
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ $item->name }} @if ($item->has_children)
+                                <i class="ti-angle-down ml-1"></i>
                             @endif
-                        @endforeach
-                    @endif
-
-                </li>
+                        </a>
+                        @if ($item->has_children)
+                            <div class="dropdown-menu">
+                                @foreach ($menu as $sub_menu)
+                                    @if ($sub_menu->parent_id == $item->id)
+                                        <a class="dropdown-item"
+                                            href="{{ route('catalogue-news', ['id' => $sub_menu->id, 'slug' => $sub_menu->slug]) }}">{{ $sub_menu->name }}</a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
+                    </li>
+                @endif
             @endforeach
 
 
@@ -91,7 +93,7 @@
                 <div class="dropdown-menu ">
                     <!-- item-->
                     <h6 class="">Chào {{ Auth::user()->last_name }}!</h6>
-                    <a class="dropdown-item" href="{{ route('admin.auth.profile', Auth::user()->id) }}">
+                    <a class="dropdown-item" href="{{ route('profile', Auth::user()->id) }}">
                         <i class="mdi mdi-account-circle "></i>
                         <span class="align-middle">Thông tin cá nhân</span>
                     </a>

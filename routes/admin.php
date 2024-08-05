@@ -40,14 +40,14 @@ Route::middleware('is_user')->prefix('admin')->as('admin.')->group(function () {
     });
     Route::prefix('post')->as('post.')->group(function () {
         Route::get('/', [PostController::class, 'index'])->name('index')->can('post.list');
-        Route::get('/trash', [PostController::class, 'trash'])->name('trash')->can('post.trash');
+        Route::get('/trash', [PostController::class, 'trash'])->name('trash');
         Route::get('/create', [PostController::class, 'create'])->name('create')->can('post.add');
         Route::post('/create', [PostController::class, 'store'])->name('store');
         Route::get('{id}/show', [PostController::class, 'show'])->name('show')->can('post.show');
         Route::get('{id}/edit', [PostController::class, 'edit'])->name('edit')->can('post.edit');
         Route::post('{id}/update', [PostController::class, 'update'])->name('update');
-        Route::get('{id}/delsoft', [PostController::class, 'delSoft'])->name('delsoft')->can('post.delsoft');
-        Route::get('{id}/restore', [PostController::class, 'restore'])->name('restore')->can('post.restore');
+        Route::get('{id}/delsoft', [PostController::class, 'delSoft'])->name('delsoft');
+        Route::get('{id}/restore', [PostController::class, 'restore'])->name('restore');
         Route::get('{id}/delete', [PostController::class, 'destroy'])->name('destroy')->can('post.destroy');
     });
     Route::prefix('role')->as('role.')->group(function () {
